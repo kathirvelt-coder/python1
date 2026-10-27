@@ -1,0 +1,10 @@
+column,issue,action,reason
+"name, department, city","Extra spaces and mixed case (' priya ', 'RAHUL', 'hr')",strip + Title Case (HR and IT kept uppercase),One spelling per value so grouping and duplicate checks work
+salary,"Text such as '₹45,000' or '58,000'","remove symbols/commas, convert to number","Needed for median, IQR and any maths"
+id,1 missing,drop rows,id is the identifier; a row with no id can't be traced or matched
+all columns,2 duplicate rows (found after standardising text),"drop, keep first",Duplicates would double-count people and distort averages
+name,0 missing,fill with 'Unknown',"Name is a label, not used in calculations"
+department,1 missing,fill with mode,Categorical: most common department changes the data least
+city,1 missing,fill with mode,Categorical: use the most frequent city
+salary,1 missing,fill with department median (overall median as fallback),"Salary is skewed so median beats mean, and department gives context"
+salary,"1 outliers outside [18,000, 98,000] (IQR x 1.5)",flag in salary_outlier and cap at the bound,"Employee is real, so keep the row, but an extreme value would distort the mean"
